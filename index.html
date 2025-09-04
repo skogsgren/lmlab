@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>lmlab</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section class="panel">
+      <h1>Textanalys</h1>
+
+      <p>
+        Här kan du skriva in text i textlådan nedanför, och få en
+        token-för-token analys över den texten. Pröva skriv in en mening på
+        engelska och klicka på analysera. Klicka sen på varje tokenposition för
+        att se vad det mest sannolika token är för den valda positionen
+      </p>
+
+      <p>
+        <b>Log-sannolikhet:</b> Log-sannolikhet är ett sätt att skriva
+        sannolikheter så att de blir lättare att räkna med i datorer då
+        sannolikheterna annars blir oerhört små. Ju mer negativt talet är, desto
+        mindre sannolikhet.
+      </p>
+
+      <div class="bonus-points">
+        <b>Bonuspoäng</b>: vem gillar du mest, Janis Joplin or Creedence? Pröva
+        dessa prompts för att se vem GPT-2 föredrar:
+
+        <ul>
+          <li>Janis Joplin is better than Creedence Clearwater Revival</li>
+          <li>Creedence Clearwater Revival is better than Janis Joplin</li>
+        </ul>
+
+        I den första meningen, varför har 'water' så hög sannolikhet? Och för
+        ännu mer bonus poäng: varför har inte 'water' i den andra lika hög
+        sannolikhet?
+      </div>
+
+      <div class="ntl-input-row">
+        <textarea
+          id="gpt-text"
+          maxlength="200"
+          placeholder="Skriv upp till 200 bokstäver..."
+        ></textarea>
+
+        <div class="ntl-sidebox">
+          <button id="gpt-run">Analysera</button>
+          <div class="ntl-meta"><span id="gpt-count">0</span> / 200</div>
+        </div>
+      </div>
+
+      <div id="gpt-status"></div>
+
+      <div class="gpt-summary" id="gpt-summary-note"></div>
+
+      <div class="tokens" id="gpt-tokens"></div>
+
+      <div class="word-note" id="gpt-active-note"></div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Sannolikhet</th>
+            </tr>
+          </thead>
+          <tbody id="gpt-probs"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="next-token-lab" class="panel">
+      <h1>Textgenerering</h1>
+
+      <p>
+        Här kan du leka med hur en generativ språkmodell genererar text, ett
+        token i taget. Pröva att skriva in början till en mening som du vill att
+        modellen ska fortsätta och klicka sen i listan av tokens!
+      </p>
+
+      <div class="ntl-input-row">
+        <textarea
+          id="ntl-input"
+          maxlength="200"
+          placeholder="Upp till 200 bokstäver..."
+        ></textarea>
+
+        <div class="ntl-sidebox">
+          <button id="ntl-step">Nästa token</button>
+          <div class="ntl-meta"><span id="ntl-count">0</span> / 200</div>
+        </div>
+      </div>
+
+      <div class="ntl-grid">
+        <table class="ntl-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Sannolikhet</th>
+            </tr>
+          </thead>
+          <tbody id="ntl-body"></tbody>
+        </table>
+
+        <div class="ntl-side">
+          <div id="ntl-status" class="status">Idle</div>
+          <div id="ntl-note" class="note"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h1>Attention</h1>
+
+      <p>
+        Attention är en metod för att väga olika delar av information mer så att
+        de viktigaste delarna får mer betydelse när något bearbetas i en
+        språkmodell.
+        <a
+          href="https://research.google/blog/transformer-a-novel-neural-network-architecture-for-language-understanding/"
+          >Transformer arkitekturen</a
+        >
+        var designad för att lösa översättningsproblem från exempelvis engelska
+        till franska, där anaforiska pronomen som "it" har olika genus i franska
+        beroende på vad det referar på
+      </p>
+
+      <div class="pair">
+        <span class="en"
+          >The animal didn&rsquo;t cross the street because
+          <span class="hl">it</span> was too tired.</span
+        >
+        <span class="fr"
+          >L&rsquo;animal n&rsquo;a pas travers&eacute; la rue parce
+          qu&rsquo;<span class="hl">il</span> &eacute;tait trop
+          fatigu&eacute;.</span
+        >
+      </div>
+
+      <div class="pair">
+        <span class="en"
+          >The animal didn&rsquo;t cross the street because
+          <span class="hl">it</span> was too wide.</span
+        >
+        <span class="fr"
+          >L&rsquo;animal n&rsquo;a pas travers&eacute; la rue parce
+          qu&rsquo;<span class="hl">elle</span> &eacute;tait trop large.</span
+        >
+      </div>
+
+      Pröva med följande meningar på engelska. Kolla hur pilarna rör sig om du
+      klickar på "it". Vad ser du?
+
+      <ul>
+        <li>The dog walked over the street because it was lazy.</li>
+        <li>The dog walked over the street because it was an avenue.</li>
+      </ul>
+
+      <textarea id="bert-text" maxlength="200"></textarea>
+      <button id="bert-run">Analysera</button>
+      <div id="bert-status"></div>
+
+      <div class="vis" id="bert-vis">
+        <div class="tokens" id="bert-tokens"></div>
+        <svg class="arcs" id="bert-arcs"></svg>
+      </div>
+      <div id="bert-note"></div>
+
+      <p><b>För muspekaren över rutan nedan för att se svaret</b></p>
+
+      <p class="ghost-text">
+        I det första ger pilarna störst poäng till "dog", i det andra till
+        "street". Det är, med andra ord, en sorts viktad poäng för vilket token
+        som är viktigast för den <i>semantiska</i> tolkningen av "it" givet
+        kontexten.
+      </p>
+    </section>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

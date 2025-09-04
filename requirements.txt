@@ -1,0 +1,7 @@
+uvicorn[standard]
+gunicorn
+fastapi
+tokenizers==0.21.4
+torch==2.8.0
+transformers==4.55.2
+fastapi[standard]
