@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>lmlab</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+  </head>
+  <body>
+    <script type="module" src="dist/tokenizers.js"></script>
+    <script type="module" src="dist/seq.js"></script>
+    <script type="module" src="dist/next.js"></script>
+    <script type="module" src="dist/pos.js"></script>
+
+    <h1>Ordklasstaggning</h1>
+
+    <p>
+      SUC-taggarna finns i labbinstruktionen men är även tillgänglig
+      <a href="/static/suc_tags.html">här</a>
+    </p>
+
+    <p>Några exempelmeningar:</p>
+
+    <ul id="posExampleList">
+      <li>Jag har, som alla andra, slukat Orange is the New Black.</li>
+      <li>Kenny Starfighter är från rymden och är noga med sitt hår.</li>
+      <li>Blandning av allt från punk och rockabilly till folkmusik.</li>
+    </ul>
+
+    <div class="tokPanel">
+      <textarea
+        id="posTextBox"
+        maxlength="{{ max_length_lm }}"
+        placeholder="Skriv upp till {{ max_length_lm }} bokstäver..."
+      ></textarea>
+
+      <div class="posSideBox">
+        <button id="posButton">Ladda</button>
+        <div><span id="posTextCount">0</span> / {{ max_length_lm }}</div>
+      </div>
+    </div>
+
+    <div id="posSentence"></div>
+
+    <div class="posControls">
+      <button id="posCollectButton">Jämför annoteringar</button>
+      <p id="posStatusText">Redo.</p>
+    </div>
+
+    <h1>Tokenisering</h1>
+
+    <p>
+      Moderna språkmodeller använder sig framförallt av kompressionsalgoritmer
+      snarare än ord/morfem-indelning. Pröva morfemindela några ord, och se hur
+      det skiljer sig från hur några språkmodeller skulle dela upp texten innan
+      det processas genom nätverket.
+    </p>
+    <div class="tokPanel">
+      <textarea
+        id="tokTextBox"
+        maxlength="{{ max_length_tok }}"
+        placeholder="Skriv upp till {{ max_length_tok }} bokstäver..."
+      ></textarea>
+
+      <div class="tokSideBox">
+        <button id="tokButton">Analysera</button>
+        <div><span id="tokTextCount">0</span> / {{ max_length_tok }}</div>
+      </div>
+    </div>
+    <p id="tokStatusText">Redo.</p>
+
+    <table id="tokTable">
+      <colgroup>
+        <col class="tokSpecCol" />
+        <col class="tokListCol" />
+      </colgroup>
+      <tbody></tbody>
+    </table>
+
+    <h1>Sekvensanalys</h1>
+    <p>
+      Här kan du skriva in text i textlådan nedanför, och få en token-för-token
+      analys över den texten. Pröva skriv in en mening och klicka på analysera.
+      Klicka sen på varje tokenposition för att se vad det mest sannolika token
+      är för den valda positionen.
+    </p>
+
+    <p>
+      <b>Log-sannolikhet:</b> Log-sannolikhet är ett sätt att skriva
+      sannolikheter så att de blir lättare att räkna med i datorer då
+      sannolikheterna annars blir oerhört små. Ju mer negativt talet är, desto
+      mindre sannolikhet.
+    </p>
+
+    <div class="tokPanel">
+      <textarea
+        id="seqTextBox"
+        maxlength="{{ max_length_lm }}"
+        placeholder="Skriv upp till {{ max_length_lm }} bokstäver..."
+      ></textarea>
+
+      <div class="tokSideBox">
+        <button id="seqButton">Analysera</button>
+        <div><span id="seqTextCount">0</span> / {{ max_length_lm }}</div>
+      </div>
+    </div>
+    <p id="seqStatusText">Redo.</p>
+
+    <div id="seqSummaryNote"></div>
+    <div id="seqRow"></div>
+    <div id="seqActiveNote"></div>
+    <div id="seqTableWrapper">
+      <table id="seqTable">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>Sannolikhet</th>
+          </tr>
+        </thead>
+        <tbody id="seqTableBody"></tbody>
+      </table>
+    </div>
+
+    <h1>Textgenerering</h1>
+    <p>
+      Här kan du leka med hur en generativ språkmodell genererar text, ett token
+      i taget. Pröva att skriva in början till en mening som du vill att
+      modellen ska fortsätta och klicka sen i listan av tokens!
+    </p>
+
+    <div class="tokPanel">
+      <div class="textBoxContainer">
+        <textarea id="nextTextBox"></textarea>
+        <div id="nextStatusBar">
+          <span id="nextStatusText">Redo.</span>
+          <span><span id="nextTokenCount">0</span> / {{ max_tokens }}</span>
+        </div>
+      </div>
+      <div class="tokSideBox">
+        <div class="controlPanel">
+          <span class="panelLabel">Temperatur</span>
+          <div class="sliderRow">
+            <div class="sliderTrack">
+              <input
+                type="range"
+                min="0"
+                max="2"
+                step="0.1"
+                value="0"
+                id="nextSlider"
+              />
+              <span class="sliderVal" id="nextSliderText">0</span>
+            </div>
+            <div class="sliderLabels">
+              <span>Kallt</span>
+              <span>Varmt</span>
+            </div>
+          </div>
+          <hr class="panelDivider" />
+          <button id="nextSampleButton" class="ctrlBtn">
+            Slumpa nästa token
+          </button>
+          <button id="nextProbButton" class="ctrlBtn">
+            Visa sannolikheter
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="nextRow"></div>
+    <div class="nextTableWrapper">
+      <table class="probTable">
+        <thead>
+          <tr>
+            <th>Nästa token</th>
+            <th>Sannolikhet - klicka för att välja</th>
+          </tr>
+        </thead>
+        <tbody id="nextTableBody"></tbody>
+      </table>
+    </div>
+  </body>
+</html>

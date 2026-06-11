@@ -1,0 +1,35 @@
+[project]
+name = "lmlab"
+version = "0.0.1"
+description = "interactive labs for introductory comp-ling course"
+readme = "README.md"
+requires-python = ">=3.10.2"
+authors = [
+    { name="Gustaf Gren", email="6107181+skogsgren@users.noreply.github.com" }
+]
+license = { file="LICENSE" }
+dependencies = [
+    "uvicorn[standard]",
+    "gunicorn",
+    "fastapi",
+    "jinja2>=3.1.4",
+    "pydantic",
+    "pydantic-settings",
+    "starlette>=0.41.0",
+    "sentencepiece",
+    "stanza",
+    "tokenizers",
+    "toml",
+    "torch",
+    "transformers",
+]
+
+[build-system]
+requires = ["setuptools>=65.5.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff.lint]
+ignore = ["F401"]
+
+[tool.setuptools.packages.find]
+where = ["."]

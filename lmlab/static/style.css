@@ -1,0 +1,467 @@
+:root {
+  --border: #ccc;
+  --border-dark: #999;
+  --bg: #fff;
+  --bg-muted: #fafafa;
+  --bg-hover: #f5f5f5;
+  --bg-active: #ebebeb;
+  --bg-subtle: #d4d0c8;
+  --text-muted: #666;
+  --text-small: 0.85rem;
+  --font-mono: "Courier New", monospace;
+}
+
+body {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+h1 {
+  color: #000;
+  background-color: var(--border);
+}
+
+/* -- Shared input/button base ------------------------------- */
+
+textarea,
+button {
+  font: inherit;
+}
+
+.tokPanel {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+#tokTextBox,
+#seqTextBox,
+#nextTextBox,
+#posTextBox {
+  flex: 1;
+  min-height: 2rem;
+  resize: none;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+}
+
+#tokButton,
+#seqButton,
+#posButton,
+#posCollectButton,
+.nextButton,
+.ctrlBtn {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-dark);
+  background: var(--bg-hover);
+  cursor: pointer;
+}
+
+#tokButton:hover,
+#seqButton:hover,
+.nextButton:hover,
+#posCollectButton:hover,
+#posButton:hover,
+.ctrlBtn:hover {
+  background: var(--bg-subtle);
+}
+
+.ctrlBtn {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-size: 14px;
+  border-color: var(--border-light);
+  background: transparent;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ctrlBtn:active {
+  transform: scale(0.98);
+}
+
+.ctrlBtn i {
+  font-size: 16px;
+  color: #888;
+}
+
+.nextButton {
+  width: 100%;
+}
+
+/* -- Status text -------------------------------------------- */
+
+#tokStatusText,
+#seqStatusText,
+#nextStatusBar > span,
+#posStatusText {
+  color: var(--text-muted);
+  margin: 0;
+  font-size: var(--text-small);
+}
+
+/* -- Shared table rules ------------------------------------- */
+#posTable,
+#seqTable,
+#probTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* -- Token table -------------------------------------------- */
+
+#tokTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#tokTable td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid var(--border-light);
+}
+
+.tokSpecCol {
+  width: 20rem;
+}
+
+.tokBox,
+.seqBox {
+  display: inline-flex;
+  flex-direction: column;
+  margin: 0.15rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--border);
+  background: var(--bg-muted);
+}
+
+.seqBox:hover {
+  cursor: pointer;
+}
+
+.tokText {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+}
+
+.tokID {
+  font-size: var(--text-small);
+  color: var(--text-muted);
+}
+
+.tokSpecText {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  font-weight: bold;
+}
+
+/* -- Sequence row ------------------------------------------- */
+
+#seqRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  align-items: flex-start;
+}
+
+.seqActiveToken {
+  background: var(--bg-subtle);
+  font-style: bold;
+}
+
+#seqTableWrapper {
+  display: none;
+  margin: 12px 0;
+}
+
+#seqTableWrapper .nextTokenRow {
+  cursor: default;
+}
+
+/* -- Next token --------------------------------------------- */
+
+#nextTextBox {
+  width: 100%;
+  min-height: 100px;
+  box-sizing: border-box;
+}
+
+#nextStatusBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px 0;
+  box-sizing: border-box;
+}
+
+.nextStatusSpan {
+  padding: 0 8px;
+}
+
+/* -- Probability table -------------------------------------- */
+
+.probTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.probTable thead th {
+  font-size: 12px;
+  font-weight: 500;
+  color: #888;
+  text-align: left;
+  padding: 4px 10px 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.nextTokenRow {
+  cursor: pointer;
+}
+
+.nextTokenRow:hover .probCell {
+  background: var(--bg-hover);
+}
+
+.nextTokenRow:active {
+  opacity: 0.7;
+}
+
+.probCell {
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.probTok {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  min-width: 80px;
+  white-space: pre;
+}
+
+.probBar {
+  flex: 1;
+  height: 6px;
+  background: #eee;
+  overflow: hidden;
+}
+
+.probBarFill {
+  height: 100%;
+  background: #888;
+}
+
+.probPct {
+  font-size: 13px;
+  color: var(--text-muted);
+  min-width: 44px;
+  text-align: right;
+}
+
+/* -- Control panel ------------------------------------------ */
+
+.tokSideBox {
+  display: flex;
+  flex-direction: column;
+  min-width: 190px;
+}
+
+.controlPanel {
+  border: 1px solid var(--border);
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: var(--bg);
+}
+
+.panelLabel {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.sliderRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sliderTrack {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sliderTrack input[type="range"] {
+  flex: 1;
+}
+
+.sliderVal {
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 24px;
+  text-align: right;
+}
+
+.sliderLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.panelDivider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* -- Limit banner ------------------------------------------- */
+
+#limitBanner {
+  --accent: #92600a;
+  --accent-border: #e6a817;
+  background: #fef3cd;
+  border: 1px solid var(--accent-border);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  margin-top: 12px;
+}
+
+#limitBanner i {
+  font-size: 28px;
+  color: var(--accent);
+}
+
+#limitBanner p {
+  margin: 0;
+  color: var(--accent);
+}
+
+#limitBanner button {
+  background: var(--bg);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  padding: 6px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* -- POS tagger --------------------------------------------- */
+
+#posTable th,
+#posTable td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+#posTable th {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+#posTable tfoot td {
+  border-bottom: none;
+  padding-top: 10px;
+}
+
+#posExampleList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#posExampleList li {
+  cursor: pointer;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  width: fit-content;
+}
+
+#posExampleList li:hover {
+  background: var(--bg-hover);
+  border-color: #aaa;
+}
+
+#posExampleList li:active {
+  background: var(--bg-active);
+}
+
+.textBoxContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#posSentence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.posToken {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 90px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-muted);
+}
+
+.posWord {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.posToken select {
+  width: 100%;
+}
+
+.posModelTag {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  display: none;
+}
+
+.posModelTag.visible {
+  display: block;
+}
+
+.posDifferent {
+  border-color: #d97706;
+  background: #fffbeb;
+}
+
+.posControls {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}

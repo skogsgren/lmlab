@@ -1,0 +1,32 @@
+services:
+  lmlab:
+    image: lmlab:latest
+    container_name: lmlab
+    restart: unless-stopped
+    ports:
+      - "8484:8484"
+    volumes:
+      - /srv/sparv/:/app/sparv/:ro
+    environment: #NOTE: these are default values and only have to be specified if needed
+      # what LLM to use for sequence and next token prediction
+      LMLAB_LM: "AI-Sweden-Models/gpt-sw3-126m"
+      # json formatted list of tokenizers for use in tokenization analysis
+      LMLAB_TOKENIZERS: "['AI-Sweden-Models/gpt-sw3-126m', 'gpt2', 'facebook/xglm-564M', 'google/byt5-small']"
+      # max number of tokens processed in next token predictions
+      LMLAB_MAX_TOKENS: 50
+      # max character length of language model input for sequence analysis
+      LMLAB_MAX_LENGTH_LM: 250
+      # max character length of tokenizer input for tokenization analysis
+      LMLAB_MAX_LENGTH_TOK: 90
+      # number of candidates printed during sequence/next token analysis
+      LMLAB_TOPK: 10
+      # idle timeout in minutes before models are unloaded
+      LMLAB_IDLE_TIMEOUT: 30
+      # stanza language code for part-of-speech analysis
+      LMLAB_POS_LANG: "sv"
+      # directory name relative root (see volume mapping above). should only be changed if you have a very specific reason for doing so, in concordance with volume mapping
+      LMLAB_POS_MODEL_DIR: "./sparv"
+      # filename for pretrained stanza model
+      LMLAB_POS_PRETRAIN: "sv_talbanken.pretrain.pt"
+      # filename for stanza part-of-speech model
+      LMLAB_POS_MODEL: "sv_talbanken_tagger.pt"

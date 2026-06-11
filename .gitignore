@@ -1,0 +1,9 @@
+node_modules/
+
+lmlab.egg-info/
+lmlab/dist
+
+sparv
+venv
+
+__pycache__
