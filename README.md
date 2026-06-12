@@ -40,8 +40,7 @@ for u in "${urls[@]}"; do
 done
 ```
 
-This should create a `./sparv` folder which contains all the
-necessary files.
+This should create a `./sparv` folder which contains all the necessary files.
 
 This can be extended to other languages by changing the POS/tokenizer etc using the environment variables (see below).
 
@@ -71,7 +70,17 @@ docker build -f docker/Dockerfile -t lmlab .
 
 # Development
 
-Run these commands while developing to do auto-reload (from
+Normal Python setup:
+
+```
+git clone https://github.com/skogsgren/lmlab
+cd lmlab
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -e .
+```
+
+Then run these commands while developing to do auto-reload (from
 within ./lmlab directory), after setting up the data according to the steps
 previously mentioned:
 
@@ -80,6 +89,8 @@ cd lmlab
 fastapi dev app.py
 npm run watch
 ```
+
+Should by default serve the website on `localhost:8000`
 
 # Code Structure
 
