@@ -7,5 +7,8 @@ services:
       - "8484:8484"
     volumes:
       - /srv/sparv/:/app/sparv/:ro
-    environment: #NOTE: see README.md for full details, here's an example:
+      - /srv/gptsw3-126m/:/app/gptsw3-126m/:ro # NOTE: example including local transformer model
+    environment: #NOTE: see README.md for full details, here's an example including local transformer model:
       LMLAB_IDLE_TIMEOUT: 30
+      LMLAB_LM: "/app/gptsw3-126m"
+      LMLAB_TOKENIZERS: '["/app/gptsw3-126m/", "gpt2", "facebook/xglm-564M", "google/byt5-small"]'
