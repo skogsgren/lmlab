@@ -72,7 +72,8 @@ docker build -f docker/Dockerfile -t lmlab .
 # Development
 
 Run these commands while developing to do auto-reload (from
-within ./lmlab directory):
+within ./lmlab directory), after setting up the data according to the steps
+previously mentioned:
 
 ```
 cd lmlab
@@ -82,7 +83,9 @@ npm run watch
 
 # Code Structure
 
-If you want to use this you probably want to customize it. `lmlab` is boilerplate code, and should be easily extensible if you dare look inside the code. Here's the general structure:
+If you want to use this you probably want to customize it. `lmlab` is boilerplate code, and should be easily extensible if you dare look inside the code. The general idea is that there's a FastAPI backend which sets up API endpoints which the frontend interacts with. Since FastAPI includes support for templating HTML and static serving, it is also used for hosting the actual web server. When a user interacts with the website and submits an API request, it is sent to FastAPI which includes async lock (so any model is only loaded once), enabling scaling up at least a little bit.
+
+Here's the general code structure:
 
 ```
 lmlab/app.py
@@ -95,4 +98,8 @@ lmlab/src
 
 lmlab/templates
     contains the html
+
+lmlab/static
+    contains resources which aren't built or
+    dynamically generated; css, images, etc.
 ```
