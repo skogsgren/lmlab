@@ -51,17 +51,17 @@ Configuration is done mostly using environment variables since it's developed wi
 
 | Variable | Default | Description |
 | --- | --- | --- |
-| LMLAB_LM | AI-Sweden-Models/gpt-sw3-126m | Language model identifier. |
-| LMLAB_TOKENIZERS | ["AI-Sweden-Models/gpt-sw3-126m", "gpt2", "facebook/xglm-564M", "google/byt5-small"] | List of tokenizer identifiers (JSON or comma-separated). |
-| LMLAB_MAX_TOKENS | 50 | Maximum tokens for generation condition. |
-| LMLAB_MAX_LENGTH_LM | 250 | Max sequence length for the language model analysis. |
-| LMLAB_MAX_LENGTH_TOK | 90 | Max sequence length for tokenizers API. |
-| LMLAB_TOP_K | 10 | How many candidates to include in lists. |
-| LMLAB_IDLE_TIMEOUT | 15 | Idle timeout (minutes) before unloading models from memory. |
-| LMLAB_POS_LANG | sv | Language for POS tagging. |
-| LMLAB_POS_MODEL_DIR | ./sparv | Directory for POS tagging models. |
-| LMLAB_POS_PRETRAIN | sv_talbanken.pretrain.pt | Pretrained POS model filename. |
-| LMLAB_POS_MODEL | sv_talbanken_tagger.pt | POS tagger model filename. |
+| `LMLAB_LM` | `AI-Sweden-Models/gpt-sw3-126m` | Language model identifier. |
+| `LMLAB_TOKENIZERS` | `["AI-Sweden-Models/gpt-sw3-126m", "gpt2", "facebook/xglm-564M", "google/byt5-small"]` | List of tokenizer identifiers (JSON string). |
+| `LMLAB_MAX_TOKENS` | `50` | Maximum tokens for generation condition. |
+| `LMLAB_MAX_LENGTH_LM` | `250` | Max sequence length for the language model analysis. |
+| `LMLAB_MAX_LENGTH_TOK` | `90 | Max sequence length for tokenizers API. |
+| `LMLAB_TOP_K` | `10` | How many candidates to include in lists. |
+| `LMLAB_IDLE_TIMEOUT` | `15` | Idle timeout (minutes) before unloading models from memory. |
+| `LMLAB_POS_LANG` | `sv` | Language for POS tagging. |
+| `LMLAB_POS_MODEL_DIR` | `./sparv` | Directory for POS tagging models. |
+| `LMLAB_POS_PRETRAIN` | `sv_talbanken.pretrain.pt` | Pretrained POS model filename. |
+| `LMLAB_POS_MODEL` | `sv_talbanken_tagger.pt` | POS tagger model filename. |
 
 # Building
 
