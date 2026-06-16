@@ -21,7 +21,7 @@ async function posRequest() {
 
     let inp = posTextBox.value;
     try {
-        let resp = await fetch("/pos", {
+        let resp = await fetch("pos", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ inp }),

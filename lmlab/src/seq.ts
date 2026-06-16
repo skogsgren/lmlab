@@ -113,7 +113,7 @@ async function seqRequest() {
     let data: SeqResponse;
     let inp = seqTextBox.value;
     try {
-        let resp = await fetch("/seq", {
+        let resp = await fetch("seq", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ inp }),

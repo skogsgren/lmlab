@@ -21,7 +21,7 @@ async function tokRequest() {
     let inp = tokTextBox.value;
     let data: TokResponse;
     try {
-        let resp = await fetch("/tok", {
+        let resp = await fetch("tok", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ inp }),

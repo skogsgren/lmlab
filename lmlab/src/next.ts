@@ -81,7 +81,7 @@ async function nextRequest() {
     const temp = parseFloat(nextSlider.value);
     let data: TokenPredictionResponse;
     try {
-        let resp = await fetch("/next", {
+        let resp = await fetch("next", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({ inp, temp }),
