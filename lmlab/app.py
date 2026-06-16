@@ -35,6 +35,7 @@ class Settings(BaseSettings):
     pos_model_dir: Path = "./sparv"
     pos_pretrain: str = "sv_talbanken.pretrain.pt"
     pos_model: str = "sv_talbanken_tagger.pt"
+    subpath: str = ""
 
     class Config:
         env_prefix = "lmlab_"
@@ -50,7 +51,8 @@ class NextTokenInferenceRequest(BaseModel):
 
 
 settings = Settings()
-app = FastAPI()
+print(settings)
+app = FastAPI(root_path=settings.subpath)
 
 QUEUE_LOCK = asyncio.Lock()
 
