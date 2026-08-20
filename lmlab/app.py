@@ -155,7 +155,6 @@ async def seq(payload: InferenceRequest):
 
         topk_all = []
         actual = []
-        logprob_sum = 0.0
         N = len(input_ids) - 1
         for i in range(N):
             probs = torch.softmax(logits[i], dim=-1)
@@ -169,19 +168,21 @@ async def seq(payload: InferenceRequest):
 
             tid = int(input_ids[i + 1].item())
             p = float(probs[tid].item())
-            lp = float(torch.log(probs[tid]).item())
-            logprob_sum += lp
+            lp = float(torch.log2(probs[tid]).item())
             actual.append({"token": tokens[i + 1], "prob": p, "logprob": lp, "pos": i})
+
+        displayed = actual[:-1]
+        logprob_sum = sum(a["logprob"] for a in displayed)
+        num_predicted = len(displayed)
 
         return {
             "tokens": tokens[1:-1],
             "topk": topk_all[:-1],
-            "actual": actual[:-1],
+            "actual": displayed,
             "summary": {
-                "log_prob": logprob_sum,
-                "log10_prob": logprob_sum / math.log(10),
-                "avg_log_prob": logprob_sum / (N - 1),
-                "num_predicted": N - 1,
+                "log2_prob": logprob_sum,
+                "avg_log2_prob": logprob_sum / num_predicted if num_predicted else 0.0,
+                "num_predicted": num_predicted,
             },
         }
 

@@ -27,9 +27,8 @@ interface ActualToken {
 }
 
 interface Summary {
-  log_prob: number;
-  log10_prob: number;
-  avg_log_prob: number;
+  log2_prob: number;
+  avg_log2_prob: number;
   num_predicted: number;
 }
 
@@ -69,8 +68,8 @@ function renderSummary(summary: Summary) {
     seqSummaryNote.innerHTML = `
         <h3>Sammanfattning över ${summary.num_predicted} tokens</h3>
         <ul>
-        <li><i>log10 P(text)</i> = ${summary.log10_prob.toFixed(3)}</li>
-        <li><i>Sannolikhet</i> ≈ ${Math.exp(summary.log10_prob).toFixed(40)}</li>
+        <li><i>log2 P(text)</i> = ${summary.log2_prob.toFixed(3)}</li>
+        <li><i>Sannolikhet</i> ≈ ${Math.pow(2, summary.log2_prob).toFixed(40)}</li>
         </ul>
     `;
 }
