@@ -17,10 +17,10 @@ import re
 
 
 class Settings(BaseSettings):
-    lm: str = "AI-Sweden-Models/gpt-sw3-126m"
+    lm: str = "gpt-sw3-126m"
     tokenizers: list[str] = Field(
         default_factory=lambda: [
-            "AI-Sweden-Models/gpt-sw3-126m",
+            "gpt-sw3-126m",
             "gpt2",
             "facebook/xglm-564M",
             "google/byt5-small",
